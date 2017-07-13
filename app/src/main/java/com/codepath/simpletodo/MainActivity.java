@@ -24,11 +24,11 @@ import java.util.List;
 
 import res.layout.EditItemActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddItemDialogFragment.AddItemDialogListener{
     private final int REQUEST_CODE = 20;
-    List<String> items;
-    ArrayAdapter<String> itemsAdapter;
-    ListView lvItems;
+    private ArrayList<Item> items;
+    private ItemAdapter myItemsAdapter;
+    private ListView lvItems;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -40,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lvItems = (ListView) findViewById(R.id.lvItems);
-        readItems();
-        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
-        lvItems.setAdapter(itemsAdapter);
+//        readItems();
+        items = new ArrayList<Item>();
+        myItemsAdapter = new ItemAdapter(this, items);
+        lvItems.setAdapter(myItemsAdapter);
         setUpListViewListener();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -50,11 +51,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAddItem(View v) {
+        DialogDemoActivity addItemDf = new DialogDemoActivity(myItemsAdapter);
+    }
+
+    @Override
+    public void onFinishAddDialog(String inputText) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
-        itemsAdapter.add(itemText);
+        Item item = new Item(itemText);
+        myItemsAdapter.add(item);
         etNewItem.setText("");
-        writeItems();
+//        writeItems();
     }
 
     private void setUpListViewListener() {
@@ -63,13 +70,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapter, View item, int pos, long id) {
                         items.remove(pos);
-                        itemsAdapter.notifyDataSetChanged();
-                        writeItems();
+                        myItemsAdapter.notifyDataSetChanged();
+//                        writeItems();
                         return true;
                     }
                 });
 
-//TODO: next 3 methods
         lvItems.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
@@ -84,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         // first parameter is the context, second is the class of the activity to launch
         Intent i = new Intent(MainActivity.this, EditItemActivity.class);
         // put "extras" into the bundle for access in the second activity
-        i.putExtra("todo_item", items.get(pos));
+        i.putExtra("todo_item", items.get(pos).getName());
         i.putExtra("pos", pos);
         // brings up the second activity
         startActivityForResult(i, REQUEST_CODE);
@@ -98,21 +104,21 @@ public class MainActivity extends AppCompatActivity {
             String name = data.getExtras().getString("editText");
             int pos = data.getIntExtra("posReturn", -1);
             System.out.println(pos);
-            items.set(pos, name);
-            itemsAdapter.notifyDataSetChanged();
-            writeItems();
+            items.set(pos, new Item(name));
+            myItemsAdapter.notifyDataSetChanged();
+//            writeItems();
         }
     }
 
-    private void readItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try {
-            items = new ArrayList<String>(FileUtils.readLines(todoFile));
-        } catch (IOException e) {
-            items = new ArrayList<String>();
-        }
-    }
+//    private void readItems() {
+//        File filesDir = getFilesDir();
+//        File todoFile = new File(filesDir, "todo.txt");
+//        try {
+//            items = new ArrayList<Item>(FileUtils.readLines(todoFile));
+//        } catch (IOException e) {
+//            items = new ArrayList<Item>();
+//        }
+//    }
 
     private void writeItems() {
         File filesDir = getFilesDir();
