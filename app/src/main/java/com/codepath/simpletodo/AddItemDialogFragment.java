@@ -25,6 +25,7 @@ public class AddItemDialogFragment extends DialogFragment implements AdapterView
     private Spinner myCategory;
     private EditText myDescr;
     private Button myDoneButton;
+    private Button myCancelButton;
 
     // 1. Defines the listener interface with a method passing back data result.
     public interface AddItemDialogListener {
@@ -71,16 +72,25 @@ public class AddItemDialogFragment extends DialogFragment implements AdapterView
 
         myDoneButton = (Button) view.findViewById(R.id.myAddBtn);
         myDoneButton.setOnClickListener(this);
+
+        myCancelButton = (Button) view.findViewById(R.id.myCancelBtn);
+        myCancelButton.setOnClickListener(this);
     }
 
     // Fires whenever the textfield has an action performed
     // REQUIRES a 'soft keyboard' (virtual keyboard)
     @Override
     public void onClick(View v) {
-            // Return input text back to activity through the implemented listener
-            AddItemDialogListener listener = (AddItemDialogListener) getActivity();
-            listener.onFinishAddDialog(myName.getText().toString());
-            // Close the dialog and return back to the parent activity
-            dismiss();
+        switch(v.getId()) {
+            case R.id.myAddBtn:
+                // Return input text back to activity through the implemented listener
+                AddItemDialogListener listener = (AddItemDialogListener) getActivity();
+                listener.onFinishAddDialog(myName.getText().toString());
+                // Close the dialog and return back to the parent activity
+                dismiss();
+
+            case R.id.myCancelBtn:
+                dismiss();
+        }
     }
 }

@@ -1,5 +1,7 @@
 package com.codepath.simpletodo;
 
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**

@@ -24,8 +24,9 @@ import java.util.List;
 
 import res.layout.EditItemActivity;
 
-public class MainActivity extends AppCompatActivity implements AddItemDialogFragment.AddItemDialogListener{
-    private final int REQUEST_CODE = 20;
+public class MainActivity extends AppCompatActivity {
+    private final int EDITITEM_REQUEST_CODE = 20;
+    private final int ADDITEM_REQUEST_CODE = 21;
     private ArrayList<Item> items;
     private ItemAdapter myItemsAdapter;
     private ListView lvItems;
@@ -51,17 +52,8 @@ public class MainActivity extends AppCompatActivity implements AddItemDialogFrag
     }
 
     public void onAddItem(View v) {
-        DialogDemoActivity addItemDf = new DialogDemoActivity(myItemsAdapter);
-    }
-
-    @Override
-    public void onFinishAddDialog(String inputText) {
-        EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
-        String itemText = etNewItem.getText().toString();
-        Item item = new Item(itemText);
-        myItemsAdapter.add(item);
-        etNewItem.setText("");
-//        writeItems();
+        Intent i = new Intent(MainActivity.this, DialogDemoActivity.class);
+        startActivityForResult(i, ADDITEM_REQUEST_CODE);
     }
 
     private void setUpListViewListener() {
@@ -93,18 +85,26 @@ public class MainActivity extends AppCompatActivity implements AddItemDialogFrag
         i.putExtra("todo_item", items.get(pos).getName());
         i.putExtra("pos", pos);
         // brings up the second activity
-        startActivityForResult(i, REQUEST_CODE);
+        startActivityForResult(i, EDITITEM_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // REQUEST_CODE is defined above
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+        if (resultCode == RESULT_OK && requestCode == EDITITEM_REQUEST_CODE) {
             // Extract name value from result extras
             String name = data.getExtras().getString("editText");
             int pos = data.getIntExtra("posReturn", -1);
             System.out.println(pos);
             items.set(pos, new Item(name));
+            myItemsAdapter.notifyDataSetChanged();
+//            writeItems();
+        }
+
+        if (resultCode == RESULT_OK && requestCode == ADDITEM_REQUEST_CODE) {
+            // Extract name value from result extras
+            String name = data.getExtras().getString("itemName");
+            items.add(new Item(name));
             myItemsAdapter.notifyDataSetChanged();
 //            writeItems();
         }
