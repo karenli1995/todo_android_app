@@ -6,7 +6,7 @@ import android.widget.BaseAdapter;
 
 import java.util.List;
 
-import model.listeners.ItemListener;
+import model.listeners.IItemListener;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -15,11 +15,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ItemAdapter extends BaseAdapter {
     private List<Item> myItems;
-    private ItemListener myItemListener;
+    private IItemListener myItemListener;
 
-    public ItemAdapter(List<Item> items, ItemListener itemListener) {
+    public ItemAdapter(List<Item> items, IItemListener itemListener) {
         setList(items);
         myItemListener = itemListener;
+    }
+
+    public void replaceData(List<Item> items) {
+        setList(items);
+        notifyDataSetChanged();
     }
 
     private void setList(List<Item> items) {

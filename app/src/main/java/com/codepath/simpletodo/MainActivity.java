@@ -22,12 +22,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.ItemAdapter;
+import model.Item;
 import res.layout.EditItemActivity;
 
 public class MainActivity extends AppCompatActivity {
     private final int REQUEST_CODE = 20;
-    List<String> items;
-    ArrayAdapter<String> itemsAdapter;
+    List<Item> items;
+    ItemAdapter itemsAdapter;
     ListView lvItems;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -40,8 +42,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lvItems = (ListView) findViewById(R.id.lvItems);
-        readItems();
-        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+//        readItems();
+        items = new ArrayList<Item>();
+        itemsAdapter = new ItemAdapter(items,);
         lvItems.setAdapter(itemsAdapter);
         setUpListViewListener();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -104,15 +107,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void readItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try {
-            items = new ArrayList<String>(FileUtils.readLines(todoFile));
-        } catch (IOException e) {
-            items = new ArrayList<String>();
-        }
-    }
+//    private void readItems() {
+//        File filesDir = getFilesDir();
+//        File todoFile = new File(filesDir, "todo.txt");
+//        try {
+//            items = new ArrayList<String>(FileUtils.readLines(todoFile));
+//        } catch (IOException e) {
+//            items = new ArrayList<String>();
+//        }
+//    }
 
     private void writeItems() {
         File filesDir = getFilesDir();
