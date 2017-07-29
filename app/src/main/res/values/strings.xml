@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">SimpleTodo</string>
+    <string name="list_title">TO-DO List</string>
+    <string name="title_hint">Enter Name</string>
+    <string name="description_hint">Enter a description</string>
 </resources>

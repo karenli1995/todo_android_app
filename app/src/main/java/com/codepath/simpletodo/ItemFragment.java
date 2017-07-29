@@ -30,7 +30,8 @@ public class ItemFragment extends Fragment implements IItemView {
     private ItemListener myItemListener;
     private ListView lvItems;
 
-    IItemController myItemController;
+    private IItemController myItemController;
+    private LinearLayout myItemView;
 
     public ItemFragment() {
         // Requires empty public constructor
@@ -77,8 +78,8 @@ public class ItemFragment extends Fragment implements IItemView {
 
     @Override
     public void showAddTask() {
-        Intent intent = new Intent(this, AddEditTaskActivity.class);
-        startActivityForResult(intent, AddEditTaskActivity.REQUEST_ADD_TASK);
+        Intent intent = new Intent(this, AddEditActivity.class);
+        startActivityForResult(intent, AddEditActivity.REQUEST_ADD_TASK);
     }
 
     @Override
