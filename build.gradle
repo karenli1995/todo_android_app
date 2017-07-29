@@ -27,4 +27,5 @@ task clean(type: Delete) {
 ext {
     // App dependencies
     supportLibraryVersion = '24.2.0'
+    guavaVersion = '18.0'
 }

@@ -2,6 +2,8 @@ package controller;
 
 import android.support.annotation.NonNull;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import view.IItemView;
 
 /**

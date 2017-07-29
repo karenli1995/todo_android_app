@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.codepath.simpletodo"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -26,6 +26,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'commons-io:commons-io:2.4'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile "com.google.guava:guava:$rootProject.guavaVersion"
+
 
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"

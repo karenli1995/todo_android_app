@@ -21,6 +21,8 @@ import model.listeners.ItemListener;
 import view.IItemView;
 import model.Item;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by karenli on 7/19/17.
  */

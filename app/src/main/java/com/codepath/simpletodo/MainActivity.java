@@ -20,8 +20,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.support.design.widget.FloatingActionButton;
 
-import com.example.android.architecture.blueprints.todoapp.util.ActivityUtils;
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -38,6 +36,7 @@ import model.ItemAdapter;
 import model.Item;
 import model.listeners.ItemListener;
 import res.layout.EditItemActivity;
+import util.ActivityUtils;
 import view.IItemView;
 
 public class MainActivity extends AppCompatActivity {
